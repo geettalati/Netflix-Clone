@@ -10,7 +10,7 @@
 
 .Navbar img{
     width: 150px;
-  margin: 20px;
+    margin: 20px;
 }
 
 .box{
@@ -29,7 +29,7 @@
 .box input{
     width: 100%;
     padding: 14px;
-    margin-bottom: 35px;
+    margin-bottom: 25px;
     background: #333;
     border-radius: 4px;
     color: white;

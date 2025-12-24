@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Login.css'
 import logo from '../../assets/logo.png'
 const Login = () => {
+    const[signstate , setsignstate] = useState("Sign In")
+
+
   return (
     <div className='Login'>
       <div className='Navbar'>
@@ -9,20 +12,24 @@ const Login = () => {
       </div>
 
       <div className='box'>
-        <h2>Sign In</h2>
+        <h2>{signstate }</h2>
 
         <form>
+            {signstate==="Sign Up"? <input type="text" placeholder='Enter your name' />:<></>}
+           
             <input type="email" placeholder='Email or phone number' />
             <input type="password" placeholder='Password' />
-            <button type='submit'>Sign in</button>
+            <button type='submit'>{signstate}</button>
             <div className='login-help'>
                 <label>Remember me</label>
                 <input type="checkbox" name="" id="" />
               <p>Need Help</p>
             </div>
         </form>
-        <p className='sign-uptext'>New to Netflix?     <span>Sign Up Now</span></p>
-        <p className='sign-uptext'>Already to Account     <span>Sign In</span></p>
+        <div className='sign-uptext'>{signstate==="Sign In" ? <p >New to Netflix?<span onClick={() =>{setsignstate("Sign Up")}}>Sign Up Now</span></p> : <p>Already to Account<span onClick={()=>{setsignstate("Sign In")}}>Sign In</span></p>}
+        
+        
+        </div>
       </div>      
     </div>
   );
