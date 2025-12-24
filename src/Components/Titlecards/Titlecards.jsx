@@ -4,7 +4,7 @@ import cards_data from '../../assets/cards/Cards_data'
 
 
 
-const Titlecards = () => {
+const Titlecards = ({title,category }) => {
   const cardsref = useRef();
 const handlewheel =(event) =>{
   event.preventdefault();
@@ -16,7 +16,7 @@ useEffect(()=>{
 
   return (
     <div className='titlecards'>
-      <h2>Popular onn Netflix</h2>  
+      <h2>{title?title:"Popular on Netflix"}</h2>  
       <div className='card-list' ref={cardsref}>
         {cards_data.map((card , index)=>{
             return <div className='card' key={index}>
