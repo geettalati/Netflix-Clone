@@ -1,0 +1,71 @@
+.Login{
+   min-height: 100vh;
+   background-image: linear-gradient(#0000007e,#0000007e) , url(/public/background_banner.jpg);
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7)
+    ),
+    
+}
+
+.Navbar img{
+    width: 150px;
+  margin: 20px;
+}
+
+.box{
+    width: 400px;
+    padding: 60px;
+    background: rgba(5,5, 5, 0.75);
+    margin: auto;
+    color: white;
+    border-radius: 10px;
+}
+
+.box h2{
+    margin-bottom: 25px;
+}
+
+.box input{
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 35px;
+    background: #333;
+    border-radius: 4px;
+    color: white;
+    outline: none;
+    border: none;
+}
+
+.box button{
+    width: 100%;
+    padding: 14px;
+    background: #e50914;
+    cursor: pointer;
+    border-radius: 10px;
+    font-family: 'poppins';
+    color: white;
+    border: none;
+    font: 16px;
+}
+
+.login-help {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #b3b3b3;
+}
+.sign-uptext{
+    margin-top: 10px;
+    color: #737373;
+}
+
+.sign-uptext span{
+    color: white;
+    cursor: pointer;
+    font-weight: 350;
+}
+
+
