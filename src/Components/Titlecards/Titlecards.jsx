@@ -1,44 +1,69 @@
-import React, { useEffect, useRef, useState } from 'react'
-import './Titlecards.css'
-import cards_data from '../../assets/cards/Cards_data'
+import React, { useEffect, useRef, useState } from 'react';
+import './Titlecards.css';
+import axios from 'axios';
 
-const Titlecards = ({title,category }) => {
-  const [apidata,setapidata] = useState([]);
-  const cardsref = useRef();
-  const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NjFlNTliZmQ2OGRjNmU4YzcyNDdmZmQ2NmY5ZGU1OSIsIm5iZiI6MTc2NjU5MTY1MC42ODMsInN1YiI6IjY5NGMwY2EyNmVlMmFmOTY1OTE1NDU4ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9Vy1ch3dlnnb6oIBhIuXr1Hw2Olx6KAiOY-aEwmfbB0'
-  }
-};
+const Titlecards = ({ title, category }) => {
+  const [apidata, setapidata] = useState([]);
+  const cardsref = useRef(null);
 
-const handlewheel =(event) =>{
-  event.preventefault();
-  cardsref.current.scrollleft += event.deltaY;
-}
-useEffect(()=>{
-  fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options)
-  .then(res => res.json())
-  .then(res => setapidata(res.results))
-  .catch(err => console.error(err));
+  const API_KEY = '761e59bfd68dc6e8c7247ffd66f9de59';
 
-  cardsref.current.addEventListener('wheel',handlewheel);
-},[])
+  const handlewheel = (event) => {
+    event.preventDefault();
+    cardsref.current.scrollLeft += event.deltaY;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/${category || 'now_playing'}`,
+          {
+            params: {
+              api_key: API_KEY,
+              language: 'en-US',
+              page: 1,
+            },
+          }
+        );
+
+        setapidata(response.data.results);
+      } catch (err) {
+        console.error('API Error:', err.response?.data || err.message);
+      }
+    };
+
+    fetchData();
+
+    const currentRef = cardsref.current;
+    if (currentRef) {
+      currentRef.addEventListener('wheel', handlewheel);
+    }
+
+    return () => {
+      if (currentRef) {
+        currentRef.removeEventListener('wheel', handlewheel);
+      }
+    };
+  }, [category]); // 🔥 IMPORTANT
 
   return (
-    <div className='titlecards'>
-      <h2>{title?title:"Popular on Netflix"}</h2>  
-      <div className='card-list' ref={cardsref}>
-        {apidata.map((card , index)=>{
-            return <div className='card' key={index}>
-              <img src={`https://image.tmdb.org/t/p/w500`+card.backdrop_path} alt="" />
-              <p>{card.original_title} </p>
-            </div> 
-        })}
+    <div className="titlecards">
+      <h2>{title || 'Popular on Netflix'}</h2>
+
+      <div className="card-list" ref={cardsref}>
+        {apidata.map((card) => (
+          <div className="card" key={card.id}>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${card.backdrop_path}`}
+              alt={card.title}
+            />
+            <p>{card.title}</p>
+          </div>
+        ))}
       </div>
     </div>
-  )
-}
-import './Titlecards.css'
-export default Titlecards
+  );
+};
+
+export default Titlecards;
