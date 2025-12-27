@@ -1,0 +1,44 @@
+/* ONLY applies to Player page */
+.player {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999; /* keeps it above home */
+}
+
+/* Back button */
+.player .back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 45px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Video iframe ONLY inside player */
+.player .video-frame {
+  width: 90%;
+  height: 70%;
+  border-radius: 12px;
+  border: none;
+}
+
+/* Info */
+.player-info {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  color: white;
+  font-size: 14px;
+}

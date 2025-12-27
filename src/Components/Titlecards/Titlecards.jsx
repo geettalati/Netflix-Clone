@@ -1,17 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './Titlecards.css';
-import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react'
+import './Titlecards.css'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Titlecards = ({ title, category }) => {
-  const [apidata, setapidata] = useState([]);
-  const cardsref = useRef(null);
+  const [apidata, setapidata] = useState([])
+  const cardsref = useRef(null)
+  const navigate = useNavigate()
 
-  const API_KEY = '761e59bfd68dc6e8c7247ffd66f9de59';
+  const API_KEY = '761e59bfd68dc6e8c7247ffd66f9de59'
 
   const handlewheel = (event) => {
-    event.preventDefault();
-    cardsref.current.scrollLeft += event.deltaY;
-  };
+    event.preventDefault()
+    cardsref.current.scrollLeft += event.deltaY
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,30 +24,30 @@ const Titlecards = ({ title, category }) => {
             params: {
               api_key: API_KEY,
               language: 'en-US',
-              page: 1,
-            },
+              page: 1
+            }
           }
-        );
+        )
 
-        setapidata(response.data.results);
+        setapidata(response.data.results)
       } catch (err) {
-        console.error('API Error:', err.response?.data || err.message);
+        console.error('API Error:', err.response?.data || err.message)
       }
-    };
+    }
 
-    fetchData();
+    fetchData()
 
-    const currentRef = cardsref.current;
+    const currentRef = cardsref.current
     if (currentRef) {
-      currentRef.addEventListener('wheel', handlewheel);
+      currentRef.addEventListener('wheel', handlewheel)
     }
 
     return () => {
       if (currentRef) {
-        currentRef.removeEventListener('wheel', handlewheel);
+        currentRef.removeEventListener('wheel', handlewheel)
       }
-    };
-  }, [category]); // 🔥 IMPORTANT
+    }
+  }, [category])
 
   return (
     <div className="titlecards">
@@ -53,7 +55,11 @@ const Titlecards = ({ title, category }) => {
 
       <div className="card-list" ref={cardsref}>
         {apidata.map((card) => (
-          <div className="card" key={card.id}>
+          <div
+            className="card"
+            key={card.id}
+            onClick={() => navigate(`/player/${card.id}`)}
+          >
             <img
               src={`https://image.tmdb.org/t/p/w500${card.backdrop_path}`}
               alt={card.title}
@@ -63,7 +69,7 @@ const Titlecards = ({ title, category }) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Titlecards;
+export default Titlecards
